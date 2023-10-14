@@ -22,7 +22,7 @@
         <p>{{ roomDetail.roomDetail }}</p>
       </v-row>
       <v-row>
-        <v-btn color="primary" elevation="2">จอง</v-btn>
+        <v-btn color="primary" elevation="2" @click="navigateToReserveRoom">จอง</v-btn>
         <v-btn to="/contact" style="margin-left: 8px;" outlined plain text color="secondary">สอบถามเพิ่มเติม</v-btn>
       </v-row>
     </v-col>
@@ -74,6 +74,16 @@ export default {
           console.error('Error fetching room detail:', error)
           this.loading = false
         })
+    },
+    navigateToReserveRoom () {
+      // Get the roomId from the route parameters
+      const roomId = this.$route.params.room_id
+
+      // Navigate to the ReserveRoom component with the roomId
+      this.$router.push({
+        name: 'ReserveRoom', // Replace with the name of your ReserveRoom route
+        params: { roomId }
+      })
     }
   }
 }
