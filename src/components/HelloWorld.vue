@@ -1,61 +1,54 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa" target="_blank" rel="noopener">pwa</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <h1>Welcome to Krabi Paradise Hotel</h1>
+
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="6" md="4">
+          <v-card
+          min-height="300px"
+            min-width="300px">
+            <v-img
+              src="https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_04-spa-deluxe-garden-view-02.jpg?itok=hBXK8kMBhttps://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_04-spa-deluxe-garden-view-02.jpg?itok=hBXK8kMB"
+              alt="ดีลักซ์การ์เด้นวิว"
+            ></v-img>
+            <v-card-title>ดีลักซ์การ์เด้นวิว</v-card-title> <!-- Replace with room type or description -->
+            <v-btn text color="primary">ดูเพิ่มเติม</v-btn>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" sm="6" md="4">
+          <v-card
+          min-height="300px"
+            min-width="300px">
+            <v-img
+              src="https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_03-premium-deluxe-ocean-facing-07.jpg?itok=H8l-Y7rU"
+              alt="พรีเมี่ยมดีลักซ์โอเชี่ยนเฟสซิ่ง"
+            ></v-img>
+            <v-card-title>พรีเมี่ยมดีลักซ์โอเชี่ยนเฟสซิ่ง</v-card-title> <!-- Replace with room type or description -->
+            <v-btn text color="primary">ดูเพิ่มเติม</v-btn>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" sm="6" md="4">
+          <v-card
+          min-height="300px"
+            min-width="300px">
+            <v-img
+              src="https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_09-royal-villa-09.jpg?itok=c4B4uzm2"
+              alt="รอยัลวิลลา"
+            ></v-img>
+            <v-card-title>รอยัลวิลลา</v-card-title> <!-- Replace with room type or description -->
+            <v-btn text color="primary">ดูเพิ่มเติม</v-btn>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  name: 'HotelLandingPage'
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

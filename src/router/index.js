@@ -1,22 +1,61 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HotelLandingPage from '../views/HomeView.vue'
+import AllRooms from '@/components/AllRooms.vue'
+import About from '@/components/About.vue'
+import RoomDetail from '@/components/RoomDetail'
+import SignInPage from '@/components/SignInPage'
+import SignupPage from '@/components/SignupPage'
+import ReserveRoom from '@/components/ReserveRoom'
+import contactUs from '@/components/contactUs'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'Home',
+    component: HotelLandingPage
+  },
+  {
+    path: '/all-rooms',
+    name: 'AllRooms',
+    component: AllRooms
   },
   {
     path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    name: 'About',
+    component: About
+  },
+  {
+    path: '/roomDetail',
+    name: 'RoomDetail',
+    component: RoomDetail
+  },
+  {
+    path: '/signin',
+    name: 'SignInPage',
+    component: SignInPage
+  },
+  {
+    path: '/signup',
+    name: 'SignupPage',
+    component: SignupPage
+  },
+  {
+    path: '/ReserveRoom',
+    name: 'ReserveRoom',
+    component: ReserveRoom
+  },
+  {
+    path: '/contact',
+    name: 'contactUs',
+    component: contactUs
+  },
+  {
+    path: '/profile',
+    name: 'ProfilePage',
+    component: () => import('@/components/ProfilePage.vue') // Load the ProfilePage component
   }
 ]
 
