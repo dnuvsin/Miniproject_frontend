@@ -5,9 +5,8 @@
       <p><strong>User Name:</strong> {{ user.userName }}</p>
       <p><strong>User Email:</strong> {{ user.userEmail }}</p>
       <p><strong>User Phone:</strong> {{ user.userPhone }}</p>
-      <p><strong>User Password:</strong> {{ user.userPassword }}</p>
     </div>
-    <button @click="logout">Logout</button>
+    <button outline @click="logout">Logout</button>
   </div>
 </template>
 

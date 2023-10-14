@@ -21,10 +21,10 @@
 
           <v-img
             height="250"
-            :src="item.imageUrl"
+            :src="item.imageUrl1"
           ></v-img>
 
-          <v-card-title>{{ item.title }}</v-card-title>
+          <v-card-title>{{ item.roomName }}</v-card-title>
 
           <v-card-text>
             <div>{{ item.description }}</div>
@@ -34,9 +34,9 @@
             <v-btn
               color="deep-purple lighten-2"
               text
-              @click="reserve(index)"
+              @click="seeDetails(index)"
             >
-              Reserve
+              See Details
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -46,40 +46,40 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'AllRooms',
   data: () => ({
-    loading: false,
-    items: [
-      {
-        imageUrl: 'https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_01-deluxe-garden-view-01.jpg?itok=Vfu01OFJ',
-        title: 'ดีลักซ์การ์เด้นวิว',
-        description: 'ห้องดีลักซ์นี้ตกแต่งในโทนสีไม้ธรรมชาติ แต่งเติมด้วยสิ่งทอหลากสีสันและตกแต่งแบบไทยสุดหรูหรา...'
-      },
-      {
-        imageUrl: 'https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_02-deluxe-ocean-facing-01.jpg?itok=5i7WWyrd',
-        title: 'ดีลักซ์โอเชี่ยนเฟสซิ่ง',
-        description: 'ห้องดีลักซ์ขนาด 72 ตร.ม. นี้มีการผสมผสานระหว่างสีสันที่หรูหราและไม้ขัดเงาสีอบอุ่น...'
-      },
-      {
-        imageUrl: 'https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_03-premium-deluxe-ocean-facing-07.jpg?itok=H8l-Y7rU',
-        title: 'พรีเมี่ยมดีลักซ์โอเชี่ยนเฟสซิ่ง',
-        description: 'ห้องพรีเมี่ยมดีลักซ์ขนาด 77 ตร.ม. ตั้งอยู่ท่ามกลางต้นไม้สีเขียว มีระเบียงหัวมุมที่เปิดรับแสงแดดในเขตร้อน...'
-      },
-      {
-        imageUrl: 'https://www.centarahotelsresorts.com/centaragrand/sites/g/files/yplzxh121/files/styles/room_listing/public/2020-09/CKBR_06-_one-bedroom-beachfront-villa-03.jpg?itok=DzwMZ069',
-        title: 'บีชฟร้อนท์ วิลลา 1 ห้องนอน',
-        description: 'วิลลาริมชายหาดขนาด 96 ตร.ม. อยู่ห่างจากน้ำทะเลสีฟ้าครามเพียงไม่กี่ก้าว...'
-      }
-      // Add more items as needed
-    ]
+    loading: true,
+    items: []
   }),
 
+  created () {
+    this.fetchRooms()
+  },
+
   methods: {
-    reserve (index) {
-      // Handle the reserve action for the selected item
-      console.log('Reserving item at index:', index)
+    fetchRooms () {
+      axios.get('http://localhost:9000/room')
+        .then((response) => {
+          this.items = response.data
+          this.loading = false
+        })
+        .catch((error) => {
+          console.error('Error fetching room data:', error)
+          this.loading = false
+        })
+    },
+
+    seeDetails (index) {
+      if (typeof index === 'number' && index >= 0 && index < this.items.length) {
+        console.log('Viewing details of item at index:', index)
+        this.$router.push({ path: `/rooms/${index}` })
+      } else {
+        console.error('Invalid index:', index)
+      }
     }
+
   }
 }
 </script>

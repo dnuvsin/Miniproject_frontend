@@ -18,7 +18,7 @@ const routes = [
     component: HotelLandingPage
   },
   {
-    path: '/all-rooms',
+    path: '/rooms',
     name: 'AllRooms',
     component: AllRooms
   },
@@ -28,7 +28,7 @@ const routes = [
     component: About
   },
   {
-    path: '/roomDetail',
+    path: '/rooms/:room_id',
     name: 'RoomDetail',
     component: RoomDetail
   },
