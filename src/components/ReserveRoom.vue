@@ -1,187 +1,191 @@
 <template>
-  <v-stepper v-model="e1">
+<v-stepper v-model="e1">
     <v-stepper-header>
-      <v-stepper-step
-        :complete="e1 > 1"
-        step="1"
-      >
-        ข้อมูลส่วนตัว
-      </v-stepper-step>
+        <v-stepper-step :complete="e1 > 1" step="1">
+            ข้อมูลส่วนตัว
+        </v-stepper-step>
 
-      <v-divider></v-divider>
+        <v-divider></v-divider>
 
-      <v-stepper-step
-        :complete="e1 > 2"
-        step="2"
-      >
-        การชำระเงิน
-      </v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2">
+            การชำระเงิน
+        </v-stepper-step>
 
-      <v-divider></v-divider>
+        <v-divider></v-divider>
 
-      <v-stepper-step step="3">
-        สำเร็จ
-      </v-stepper-step>
+        <v-stepper-step step="3">
+            สำเร็จ
+        </v-stepper-step>
     </v-stepper-header>
 
     <v-stepper-items>
-      <v-stepper-content step="1">
-        <v-card
-          class="mb-12"
-          height="auto"
-        >
-        <form>
-    <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="10"
-      label="ชื่อ"
-      required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
-    ></v-text-field>
-    <v-text-field
-        v-model="phone"
-        :error-messages="phoneErrors"
-        label="เบอร์โทร"
-        required
-        @input="$v.phone.$touch()"
-        @blur="$v.phone.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="email"
-      :error-messages="emailErrors"
-      label="E-mail"
-      required
-      @input="$v.email.$touch()"
-      @blur="$v.email.$touch()"
-    ></v-text-field>
-        <v-btn
-          color="primary"
-          @click="continueStep1"
-        >
-          ต่อไป
-        </v-btn>
-        <v-btn text>
-          ยกเลิก
-        </v-btn>
-        </form>
-        </v-card>
-      </v-stepper-content>
+        <v-stepper-content step="1">
+            <v-card class="mb-12" height="auto">
+              <v-container>
+                <v-row>
+                  <v-col cols="6" sm="6">
+                  <div>
+                    <label for="roomName">ชื่อ: </label>
+                    <span id="roomName">{{ roomDetail.roomName }}</span>
+                </div>
+                <div>
+                    <label for="price">ราคา: </label>
+                    <span id="price">{{ roomDetail.price }}</span>
+                </div>
+                </v-col>
+                <v-col cols="6" sm="6">
+                  <div>
+                    <label for="userName">ชื่อ: </label>
+                    <span id="userName">{{ userName }}</span>
+                </div>
+                <div>
+                    <label for="userPhone">เบอร์โทร: </label>
+                    <span id="userPhone">{{ userPhone }}</span>
+                </div>
+                <div>
+                    <label for="userEmail">E-mail: </label>
+                    <span id="userEmail">{{ userEmail }}</span>
+                </div>
+                </v-col>
 
-      <v-stepper-content step="2">
-       <v-card class="mb-12" height="auto">
-          <form>
-            <v-radio-group
-      v-model="selectedPaymentMethod"
-      column
-      style="margin-left: 2%;"
-    >
-    <v-radio label="Credit Card" value="credit"></v-radio>
-    <v-radio label="Debit Card" value="debit"></v-radio>
-    <v-radio label="Cash" value="cash"></v-radio>
-    <v-radio label="Gift Card" value="gift"></v-radio>
-    </v-radio-group>
-        <v-btn
-          color="primary"
-          @click="continueStep2"
-        >
-          Continue
-        </v-btn>
+                </v-row>
 
-        <v-btn text
-        @click="back">
-          ย้อนกลับ
-        </v-btn>
-        </form>
-        </v-card>
-      </v-stepper-content>
+              </v-container>
 
-<v-stepper-content step="3">
-    <v-card class="mb-12" height="40vh"> <!-- Set height to 100vh to make it full height -->
-      <v-row align="center" justify="center" style="height: 100%;"> <!-- Center content vertically -->
-        <v-col cols="12" align="center"> <!-- Center content horizontally -->
-          <!-- Add a big success icon -->
-          <v-icon x-large color="success">mdi-check-circle</v-icon>
-          <v-card-text align-center>
-            <h1>การจองสำเร็จ</h1>
-          </v-card-text>
-        </v-col>
-      </v-row>
-    </v-card>
+                <form>
+                    <v-container>
+                       <v-row>
+              <v-col cols="12" sm="6">
+                <v-date-picker
+                  v-model="dates"
+                  range
+                  :min="today"
+                  :rules="dateRules"
+                  @change="updateCheckInAndOutDates"
+                  required
+                ></v-date-picker>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="checkInDate"
+                  label="Check-in Date"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                ></v-text-field>
+                <v-text-field
+                  v-model="checkOutDate"
+                  label="Check-out Date"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-    <v-btn color="primary" @click="continueStep3">
-      ประวัติการจอง
-    </v-btn>
+                        <v-btn color="primary" @click="continueStep1">
+                            ต่อไป
+                        </v-btn>
+                        <v-btn text>
+                            ยกเลิก
+                        </v-btn>
+                    </v-container>
+                </form>
+            </v-card>
+        </v-stepper-content>
 
-    <v-btn text>
-      กลับหน้าหลัก
-    </v-btn>
-  </v-stepper-content>
+        <v-stepper-content step="2">
+            <v-card class="mb-12" height="auto">
+                <form>
+                    <v-radio-group v-model="selectedPaymentMethod" column style="margin-left: 2%;">
+                        <v-radio label="Credit Card" value="credit"></v-radio>
+                        <v-radio label="Debit Card" value="debit"></v-radio>
+                        <v-radio label="Cash" value="cash"></v-radio>
+                        <v-radio label="Gift Card" value="gift"></v-radio>
+                    </v-radio-group>
+                    <v-btn color="primary" @click="continueStep2">
+                        Continue
+                    </v-btn>
+
+                    <v-btn text @click="back">
+                        ย้อนกลับ
+                    </v-btn>
+                </form>
+            </v-card>
+        </v-stepper-content>
+
+        <v-stepper-content step="3">
+            <v-card class="mb-12" height="40vh">
+                <!-- Set height to 100vh to make it full height -->
+                <v-row align="center" justify="center" style="height: 100%;">
+                    <!-- Center content vertically -->
+                    <v-col cols="12" align="center">
+                        <!-- Center content horizontally -->
+                        <!-- Add a big success icon -->
+                        <v-icon x-large color="success">mdi-check-circle</v-icon>
+                        <v-card-text align-center>
+                            <h1>การจองสำเร็จ</h1>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+            </v-card>
+
+            <v-btn color="primary" @click="continueStep3">
+                ประวัติการจอง
+            </v-btn>
+
+            <v-btn text>
+                กลับหน้าหลัก
+            </v-btn>
+        </v-stepper-content>
     </v-stepper-items>
-  </v-stepper>
+</v-stepper>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
-
+import axios from 'axios'
 export default {
-  mixins: [validationMixin],
 
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    phone: {
-      required,
-      phone (value) {
-      // You can define your custom phone validation logic here
-      // For example, you might use a regular expression to validate the phone number
-        return /^[0-9]{10}$/.test(value) // Assuming 10-digit phone number
-      }
-    }
+  created () {
+    const auth = JSON.parse(localStorage.getItem('auth'))
+    this.userName = auth.userName
+    this.userEmail = auth.userEmail
+    this.userPhone = auth.userPhone
+    this.fetchRoomDetail()
   },
 
   data: () => ({
     name: '',
     email: '',
     phone: '',
-    e1: 1
+    e1: 1,
+    dates: [],
+    today: new Date().toISOString().substr(0, 10),
+    checkInDate: '',
+    checkOutDate: '',
+    roomDetail: {
+      roomName: '',
+      price: ''
+    }
   }),
 
   computed: {
-    nameErrors () {
-      const errors = []
-      if (!this.$v.name.$dirty) return errors
-      !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-      !this.$v.name.required && errors.push('Name is required.')
-      return errors
+    dateRangeText () {
+      return this.dates.join(' ถึง ')
     },
-    phoneErrors () {
-      const errors = []
-      if (!this.$v.phone.$dirty) return errors
-      !this.$v.phone.required && errors.push('Phone is required')
-      !this.$v.phone.phone && errors.push('Invalid phone number')
-      return errors
-    },
-    emailErrors () {
-      const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('Must be valid e-mail')
-      !this.$v.email.required && errors.push('E-mail is required')
-      return errors
+    dateRules () {
+      return [
+        (v) => {
+          const selectedDate = new Date(v)
+          const currentDate = new Date(this.today)
+          return selectedDate >= currentDate || 'Please select a date after today'
+        }
+      ]
     }
   },
 
   methods: {
     continueStep1 () {
-      // Handle "Continue" button click for step 1
-      this.$v.$touch() // Trigger validation
-      if (!this.$v.$error) {
-        // Proceed to the next step if there are no validation errors
-        this.e1 = 2
-        console.log(this.e1)
-      }
+      this.e1 = 2
+      console.log(this.e1)
     },
     continueStep2 () {
     // Handle "Continue" button click for step 2
@@ -193,19 +197,45 @@ export default {
     },
     back () {
       this.e1 -= 1
+    },
+    updateCheckInAndOutDates () {
+      if (this.dates.length === 2) {
+        this.checkInDate = this.dates[0]
+        this.checkOutDate = this.dates[1]
+      } else {
+        this.checkInDate = ''
+        this.checkOutDate = ''
+      }
+    },
+    fetchRoomDetail () {
+      const roomId = this.$route.params.room_id
+      axios.get(`http://localhost:9000/room/${roomId}`)
+        .then((response) => {
+          this.roomDetail = response.data
+          this.loading = false
+        })
+        .catch((error) => {
+          console.error('Error fetching room detail:', error)
+          this.loading = false
+        })
+    }
+  },
+  watch: {
+    today () {
+      this.dates = []
     }
   }
-}
 
+}
 </script>
 
 <style scoped>
 /* Center the content within the full viewport height */
 .v-stepper-content[step="3"] {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 </style>
