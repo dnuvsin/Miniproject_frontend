@@ -43,7 +43,7 @@
       tile
     >
       <v-card-title class="title" style="background-color: #CB7C2C;">
-        <strong class="subheading">Get connected with us on social networks!</strong>
+        <strong class="subheading">ชมรีวิวเพิ่มเพิ่มได้ที่ ช่างทางต่าง ๆ ของเรา 😍</strong>
 
         <v-spacer></v-spacer>
 

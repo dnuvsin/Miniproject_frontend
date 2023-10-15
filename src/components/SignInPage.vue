@@ -18,7 +18,7 @@
                 <v-avatar size="48" color="secondary">
                   <v-icon>mdi-lock-outline</v-icon>
                 </v-avatar>
-                <span class="headline">Sign in</span>
+                <span class="headline">เข้าสู่ระบบ</span>
               </v-card-title>
               <v-card-text>
                 <v-form @submit.prevent="userLogin">
@@ -42,14 +42,13 @@
                     color="primary"
                     class="mt-3"
                   >
-                    Sign In
+                    ลงชื่อเข้าใช้
                   </v-btn>
                   </v-row>
                 </v-form>
               </v-card-text>
               <v-card-actions class="justify-center">
-                <v-btn text href="#">Forgot password?</v-btn>
-                <v-btn text to="/signup">Don't have an account? Sign Up</v-btn>
+                <v-btn text to="/signup">คุณมีผู้ใช้หรือยัง? ลงทะเบียน</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>

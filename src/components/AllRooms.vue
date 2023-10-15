@@ -33,10 +33,13 @@
           <v-card-actions>
             <v-btn
               color="deep-purple lighten-2"
-              text
+              outlined
+              class="mt-auto"
               @click="seeDetails(index)"
+              style="width: 100%;"
+              elevation="1"
             >
-              See Details
+              ดูข้อมูลเพิ่มเติม
             </v-btn>
           </v-card-actions>
         </v-card>

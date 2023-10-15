@@ -6,15 +6,15 @@
                 <v-avatar class="m-1" color="secondary">
                   <v-icon>mdi-lock-outline</v-icon>
                 </v-avatar>
-                  <v-typography variant="h5">Sign up</v-typography>
+                  <v-typography variant="h5">ลงทะเบียน</v-typography>
                 </v-row>
             <v-form @submit.prevent="handleSubmit" class="mt-3">
                 <v-row justify="center">
                     <v-col cols="12" sm="6">
-                        <v-text-field v-model="formData.userName" label="Name" required autofocus></v-text-field>
+                        <v-text-field v-model="formData.userName" label="ชื่อ" required autofocus></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6">
-                        <v-text-field v-model="formData.userPhone" label="Phone Number" required></v-text-field>
+                        <v-text-field v-model="formData.userPhone" label="เบอร์โทรศัพท์" required></v-text-field>
                     </v-col>
                     <v-col cols="12">
                         <v-text-field v-model="formData.userEmail" label="Email Address" required></v-text-field>
@@ -26,13 +26,13 @@
 
                   <v-row justify="center">
                     <v-btn type="submit" color="primary" class="mt-3 text-center" justify="center">
-                    Sign Up
+                    ลงทะเบียน
                 </v-btn>
                   </v-row>
                     <v-row justify="center">
-                        <v-link href="/signin" class="body-2">
-                            Already have an account? Sign in
-                        </v-link>
+                        <v-btn href="/signin" text class="body-2">
+                            คุณมีบัญชีผู้ใช้แล้ว? ลงชื่อเข้าใช้
+                        </v-btn>
                     </v-row>
 
             </v-form>

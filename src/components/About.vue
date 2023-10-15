@@ -14,9 +14,9 @@ export default {
   name: 'AboutHotel',
   data () {
     return {
-      hotelName: 'Hi Hotel',
+      hotelName: 'Krabi Paradise Hotel',
       tel: '123-456-7890',
-      location: '13 รัตนอุทิศ ซอย 12 ตำบล คอหงส์ อำเภอหาดใหญ่ สงขลา 90110'
+      location: 'อ่าวนาง กระบี่ 81000'
     }
   }
 }

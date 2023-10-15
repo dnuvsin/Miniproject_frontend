@@ -19,6 +19,9 @@
         <h3>{{ roomDetail.price }} บาทต่อคืน</h3>
       </v-row>
       <v-row>
+        <h5>สามารถเข้าพักได้สูงสุด {{ roomDetail.capacity }} ท่าน</h5>
+      </v-row>
+      <v-row>
         <p>{{ roomDetail.roomDetail }}</p>
       </v-row>
       <v-row>
