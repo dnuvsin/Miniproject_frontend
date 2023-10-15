@@ -32,9 +32,10 @@
         </v-container>
     </v-sheet>
       <v-footer
-      absolute
+      fixed
       dark
       padless
+      style="margin-top: 40px;"
   >
     <v-card
       class="flex"

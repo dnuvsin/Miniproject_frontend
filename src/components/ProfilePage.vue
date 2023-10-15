@@ -12,27 +12,34 @@
                                 <v-spacer></v-spacer>
                             </v-toolbar>
                         </template>
-                        <template v-slot:[`item.room`]="{ item }">
-                            {{ item.roomName }}
+                        <template v-slot:item="{ item, index }">
+                            <tr>
+                                <td>{{ index + 1 }}</td>
+                                <td>{{ item.reserveDate }}</td>
+                                <td>{{ item.roomNames }}</td>
+                                <td>{{ item.checkInDate }}</td>
+                                <td>{{ item.checkOutDate }}</td>
+                                <td>
+                                    <v-icon small outline class="mr-2" @click="openDialog('edit', item)" color="blue">
+                                        mdi-pencil
+                                    </v-icon>
+                                    <v-icon small outline @click="deleteItem(item)" color="red" class="m1-2">
+                                        mdi-delete
+                                    </v-icon>
+                                </td>
+                            </tr>
                         </template>
-                        <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon small outline class="mr-2" @click="openDialog('edit', item)" color="blue">
-                                mdi-pencil
-                            </v-icon>
-                            <v-icon small outline @click="deleteItem(item)" color="red" class="m1-2">
-                                mdi-delete
-                            </v-icon>
-                        </template>
+
                         <template v-slot:no-data>
                             <v-btn color="primary" @click="initialize">
-                                Reset
+                                ไม่มีข้อมูลการจอง
                             </v-btn>
                         </template>
                     </v-data-table>
-                    <v-dialog v-model="dialogEdit" max-width="500px">
+                    <v-dialog v-model="dialogEdit" max-width="800px">
                         <v-card>
                             <v-card-title>
-                                <span class="text-h5">{{ formTitle }}</span>
+                                <span class="text-h5">แก้ไขวันเข้าพัก</span>
                             </v-card-title>
 
                             <v-card-text>
@@ -95,7 +102,6 @@
 </template>
 
 <script>
-
 import axios from 'axios'
 
 export default {
@@ -115,10 +121,10 @@ export default {
       dates: [],
       today: new Date().toISOString().substr(0, 10),
       headers: [{
-        text: 'ไอดี',
+        text: 'ลำดับ',
         align: 'start',
         sortable: false,
-        value: 'index'
+        value: 'item'
       },
 
       {
@@ -127,7 +133,7 @@ export default {
       },
       {
         text: 'ห้องที่ทำการจอง',
-        value: 'roomName'
+        value: 'roomNames'
       },
       {
         text: 'วันที่เข้าพัก',
@@ -145,6 +151,7 @@ export default {
       ],
       reserveItem: [],
       roomNames: {},
+      roomName: {},
       formTitle: '',
       idReserve: '',
       idForDelete: ''
@@ -211,14 +218,26 @@ export default {
         this.reserveItem = data.data
 
         for (const item of this.reserveItem) {
-          await this.fetchRoomName(item.roomId)
-          console.log(this.roomNames)
+        // Fetch room name and store it in roomNames
+          await this.fetchRoomName(item.roomId, item)
         }
         console.log('reserveItem: ', this.reserveItem)
-        console.log('roomNames: ', this.roomNames)
       } catch (error) {
         console.error('Error fetching Reserve data:', error)
-        this.loading = false
+      }
+    },
+    async fetchRoomName (roomId, item) {
+      try {
+        const response = await axios.get(`http://localhost:9000/room/${roomId}`)
+        const roomName = response.data.roomName
+
+        // Update the 'roomNames' property for the item
+        this.$set(item, 'roomNames', roomName)
+
+        // If you still want to store it separately in 'roomNames', you can do that too:
+        // this.$set(this.roomNames, roomId, roomName);
+      } catch (error) {
+        console.error('Error fetching room name:', error)
       }
     },
 
@@ -231,17 +250,17 @@ export default {
     //   }
     // },
 
-    async fetchRoomName (roomId, item) {
-      if (item) {
-        try {
-          const response = await axios.get(`http://localhost:9000/room/${roomId}`)
-          const roomName = response.data.roomName
-          this.$set(item, 'roomNames', roomName)
-        } catch (error) {
-          console.error('Error fetching room name:', error)
-        }
-      }
-    },
+    // async fetchRoomName (roomId, item) {
+    //   if (item) {
+    //     try {
+    //       const response = await axios.get(`http://localhost:9000/room/${roomId}`)
+    //       const roomName = response.data.roomName
+    //       this.$set(item, 'roomName', roomName) // Update 'roomName' property
+    //     } catch (error) {
+    //       console.error('Error fetching room name:', error)
+    //     }
+    //   }
+    // },
 
     openDialog (Action, item) {
       this.formTitle = ''

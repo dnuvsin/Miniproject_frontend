@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container  style="margin-bottom: 80px;">
     <v-row>
       <v-col
         v-for="(item, index) in items"
