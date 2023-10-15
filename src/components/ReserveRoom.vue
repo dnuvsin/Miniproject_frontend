@@ -21,65 +21,58 @@
     <v-stepper-items>
         <v-stepper-content step="1">
             <v-card class="mb-12" height="auto">
-              <v-container>
-                <v-row>
-                  <v-col cols="6" sm="6">
-                  <div>
-                    <label for="roomName">ชื่อ: </label>
-                    <span id="roomName">{{ roomDetail.roomName }}</span>
-                </div>
-                <div>
-                    <label for="price">ราคา: </label>
-                    <span id="price">{{ roomDetail.price }}</span>
-                </div>
-                </v-col>
-                <v-col cols="6" sm="6">
-                  <div>
-                    <label for="userName">ชื่อ: </label>
-                    <span id="userName">{{ userName }}</span>
-                </div>
-                <div>
-                    <label for="userPhone">เบอร์โทร: </label>
-                    <span id="userPhone">{{ userPhone }}</span>
-                </div>
-                <div>
-                    <label for="userEmail">E-mail: </label>
-                    <span id="userEmail">{{ userEmail }}</span>
-                </div>
-                </v-col>
+                <v-container>
+                    <v-row>
+                        <v-col cols="6" sm="6">
+                            <div>
+                                <label for="roomName">ชื่อ: </label>
+                                <span id="roomName">{{ roomName }}</span>
+                            </div>
+                            <div>
+                                <label for="price">ราคา: </label>
+                                <span id="price">{{ price }}</span>
+                            </div>
+                        </v-col>
+                        <v-col cols="6" sm="6">
+                            <div>
+                                <label for="userName">ชื่อ: </label>
+                                <span id="userName">{{ userName }}</span>
+                            </div>
+                            <div>
+                                <label for="userPhone">เบอร์โทร: </label>
+                                <span id="userPhone">{{ userPhone }}</span>
+                            </div>
+                            <div>
+                                <label for="userEmail">E-mail: </label>
+                                <span id="userEmail">{{ userEmail }}</span>
+                            </div>
+                        </v-col>
 
-                </v-row>
+                    </v-row>
 
-              </v-container>
+                </v-container>
 
                 <form>
                     <v-container>
-                       <v-row>
-              <v-col cols="12" sm="6">
-                <v-date-picker
-                  v-model="dates"
-                  range
-                  :min="today"
-                  :rules="dateRules"
-                  @change="updateCheckInAndOutDates"
-                  required
-                ></v-date-picker>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="checkInDate"
-                  label="Check-in Date"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                ></v-text-field>
-                <v-text-field
-                  v-model="checkOutDate"
-                  label="Check-out Date"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                ></v-text-field>
-              </v-col>
-            </v-row>
+                        <v-row>
+                            <v-col cols="12" sm="6">
+                                <v-date-picker v-model="dates" range :min="today" :rules="dateRules" @change="updateCheckInAndOutDates" required></v-date-picker>
+                            </v-col>
+                            <v-col cols="12" sm="6">
+                                <v-row>
+                                    <v-text-field v-model="checkInDate" label="Check-in Date" prepend-icon="mdi-calendar" readonly></v-text-field>
+                                </v-row>
+                                <v-row>
+                                    <v-text-field v-model="checkOutDate" label="Check-out Date" prepend-icon="mdi-calendar" readonly></v-text-field>
+                                </v-row>
+                                <v-row>
+                                    จำนวนคืนทั้งหมด {{ numberOfNights }} คืน
+                                </v-row>
+                                <v-row>
+                                    ราคาทั้งหมด {{ totalRoomPrice }} บาท
+                                </v-row>
+                            </v-col>
+                        </v-row>
 
                         <v-btn color="primary" @click="continueStep1">
                             ต่อไป
@@ -102,7 +95,7 @@
                         <v-radio label="Gift Card" value="gift"></v-radio>
                     </v-radio-group>
                     <v-btn color="primary" @click="continueStep2">
-                        Continue
+                        ชำระเงิน
                     </v-btn>
 
                     <v-btn text @click="back">
@@ -146,10 +139,17 @@ export default {
 
   created () {
     const auth = JSON.parse(localStorage.getItem('auth'))
-    this.userName = auth.userName
-    this.userEmail = auth.userEmail
-    this.userPhone = auth.userPhone
-    this.fetchRoomDetail()
+    const roomDetail = JSON.parse(localStorage.getItem('roomDetail'))
+
+    if (auth && roomDetail) {
+      this.userName = auth.userName
+      this.userEmail = auth.userEmail
+      this.userPhone = auth.userPhone
+      this.roomName = roomDetail.roomName
+      this.price = roomDetail.price
+      this.auth = auth // Store auth data in the component
+      this.roomDetail = roomDetail // Store roomDetail data in the component
+    }
   },
 
   data: () => ({
@@ -161,10 +161,8 @@ export default {
     today: new Date().toISOString().substr(0, 10),
     checkInDate: '',
     checkOutDate: '',
-    roomDetail: {
-      roomName: '',
-      price: ''
-    }
+    auth: null, // Initialize auth to null
+    roomDetail: null // Initialize roomDetail to null
   }),
 
   computed: {
@@ -179,6 +177,24 @@ export default {
           return selectedDate >= currentDate || 'Please select a date after today'
         }
       ]
+    },
+    numberOfNights () {
+      if (this.checkInDate && this.checkOutDate) {
+        const checkIn = new Date(this.checkInDate)
+        const checkOut = new Date(this.checkOutDate)
+        const timeDifference = checkOut - checkIn
+        const numberOfDays = timeDifference / (1000 * 3600 * 24)
+        return numberOfDays
+      } else {
+        return 0 // Or some default value if the dates are not set
+      }
+    },
+    totalRoomPrice () {
+      if (this.price && this.numberOfNights) {
+        return this.price * this.numberOfNights
+      } else {
+        return 0 // Or some default value if the necessary data is not available
+      }
     }
   },
 
@@ -188,11 +204,29 @@ export default {
       console.log(this.e1)
     },
     continueStep2 () {
-    // Handle "Continue" button click for step 2
-      this.e1 = 3 // Transition to step 3
+      const reservationData = {
+        checkInDate: this.checkInDate,
+        checkOutDate: this.checkOutDate,
+        roomId: this.roomDetail.roomId,
+        userId: this.auth.userId,
+        reserveDate: this.today
+      }
+      // Make an HTTP POST request to the reservation endpoint
+      axios.post('http://localhost:9000/reservations', reservationData)
+        .then((response) => {
+          // Handle a successful response, e.g., show a success message
+          console.log('data', reservationData)
+          console.log('Reservation successful', response.data)
+          this.e1 = 3 // Transition to step 3
+        })
+        .catch((error) => {
+          // Handle errors, e.g., show an error message
+          console.log('data', reservationData)
+          console.error('Reservation failed', error)
+        })
     },
     continueStep3 () {
-    // Handle "Continue" button click for step 2
+      this.$router.push('/profile')
       console.log('สำเร็จ')
     },
     back () {
@@ -206,18 +240,6 @@ export default {
         this.checkInDate = ''
         this.checkOutDate = ''
       }
-    },
-    fetchRoomDetail () {
-      const roomId = this.$route.params.room_id
-      axios.get(`http://localhost:9000/room/${roomId}`)
-        .then((response) => {
-          this.roomDetail = response.data
-          this.loading = false
-        })
-        .catch((error) => {
-          console.error('Error fetching room detail:', error)
-          this.loading = false
-        })
     }
   },
   watch: {

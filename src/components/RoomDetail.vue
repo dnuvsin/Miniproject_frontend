@@ -68,6 +68,9 @@ export default {
       axios.get(`http://localhost:9000/room/${roomId}`)
         .then((response) => {
           this.roomDetail = response.data
+          localStorage.setItem('roomDetail', JSON.stringify(response.data))
+          const roomDetail = JSON.parse(localStorage.getItem('auth'))
+          console.log(roomDetail)
           this.loading = false
         })
         .catch((error) => {
@@ -79,7 +82,7 @@ export default {
       // Get the roomId from the route parameters
       const roomId = this.$route.params.room_id
 
-      // Navigate to the ReserveRoom component with the roomId
+      // Navigate to the ReserveRoom component with the roomId as a parameter
       this.$router.push({
         name: 'ReserveRoom', // Replace with the name of your ReserveRoom route
         params: { roomId }
