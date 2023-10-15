@@ -1,8 +1,8 @@
 <template>
 <v-app>
-    <v-app-bar absolute src="https://cdn.getyourguide.com/img/tour/61c047a366e8f.jpeg/145.jpg" fade-img-on-scroll color="#6A76AB" dark shrink-on-scroll prominent scroll-target="#scrolling-techniques">
+    <v-app-bar absolute src="https://cdn.getyourguide.com/img/tour/61c047a366e8f.jpeg/145.jpg" fade-img-on-scroll color="#8f3452" dark shrink-on-scroll prominent scroll-target="#scrolling-techniques">
         <template v-slot:img="{ props }">
-            <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
+            <v-img v-bind="props" gradient="to top right, rgba(137, 42, 74,.5), rgba(148, 61, 90,.5)"></v-img>
         </template>
         <v-app-bar-title>Krabi Paradise Hotel</v-app-bar-title>
 
@@ -31,20 +31,54 @@
             </v-main>
         </v-container>
     </v-sheet>
+      <v-footer
+      absolute
+      dark
+      padless
+  >
+    <v-card
+      class="flex"
+      flat
+      tile
+    >
+      <v-card-title class="title" style="background-color: #CB7C2C;">
+        <strong class="subheading">Get connected with us on social networks!</strong>
+
+        <v-spacer></v-spacer>
+
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4"
+          dark
+          icon
+        >
+          <v-icon size="24px">
+            {{ icon }}
+          </v-icon>
+        </v-btn>
+      </v-card-title>
+
+      <v-card-text class="py-2 white--text text-center">
+        {{ new Date().getFullYear() }} — <strong>Krabi Paradise Hotel</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>
 </v-app>
 </template>
 
 <script>
-import {
-  mdiAccount
-} from '@mdi/js'
 export default {
   name: 'App',
 
   data: () => ({
-    icons: {
-      mdiAccount
-    },
+    icons: [
+      'mdi-account',
+      'mdi-facebook',
+      'mdi-twitter',
+      'mdi-linkedin',
+      'mdi-instagram'
+    ],
     isLoggedIn: false
   }),
   created () {
