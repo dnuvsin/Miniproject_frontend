@@ -8,7 +8,7 @@
       >
         <v-card
           :loading="loading"
-          class="mx-auto my-4 d-flex flex-column"
+          class="mx-auto my-4 d-flex flex-column card-hover"
           max-width="374"
         >
           <template slot="progress">
@@ -86,3 +86,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.card-hover:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow when hovering */
+}
+</style>
